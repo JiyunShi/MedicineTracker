@@ -4,20 +4,16 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:icon="@drawable/ic_profile"
+            android:title="My Profile" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:icon="@drawable/ic_add_new"
+            android:title="Add new medicine" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:icon="@drawable/ic_report"
+            android:title="History/Report" />
     </group>
 
     <item android:title="Communicate">
@@ -28,8 +24,8 @@
                 android:title="Share" />
             <item
                 android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:icon="@drawable/ic_send"
+                android:title="About us" />
         </menu>
     </item>
 

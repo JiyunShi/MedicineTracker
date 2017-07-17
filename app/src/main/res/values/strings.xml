@@ -5,4 +5,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="nav_guest_user">Guest User</string>
+    <string name="nav_email_address">Please Login first to use this application</string>
 </resources>
