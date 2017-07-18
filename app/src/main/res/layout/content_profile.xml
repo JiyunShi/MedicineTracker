@@ -84,9 +84,10 @@
         android:layout_marginTop="25dp" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnNewUser"
         style="@style/defualt_button"
         android:text="Add New User"
+        android:onClick="createNewUser"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -100,7 +101,7 @@
         android:text="Switch User"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button3" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/btnNewUser" />
 
 </android.support.constraint.ConstraintLayout>

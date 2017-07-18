@@ -19,4 +19,15 @@
     <string name="take_action">Take \nAction</string>
     <string name="see_detail">See\nDetail</string>
     <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_add_medicine">AddMedicineActivity</string>
+    <string name="medicine_default">You don\'t have any medicine right now.</string>
+
+
+    <string-array name="units">
+        <item>pills</item>
+        <item>ml</item>
+        <item>mg</item>
+    </string-array>
+    <string name="title_activity_report">ReportActivity</string>
+    <string name="title_activity_new_user">NewUserActivity</string>
 </resources>

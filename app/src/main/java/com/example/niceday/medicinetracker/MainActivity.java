@@ -83,18 +83,21 @@ public class MainActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_profile:
-                Intent intent = new Intent(this, ProfileActivity.class);
-                startActivity(intent);
+                Intent intent1 = new Intent(this, ProfileActivity.class);
+                startActivity(intent1);
 
                 break;
-            case R.id.nav_gallery:
-
+            case R.id.nav_add_newMedicine:
+                Intent intent2 = new Intent(this, AddMedicineActivity.class);
+                startActivity(intent2);
                 break;
-            case R.id.nav_slideshow:
-
+            case R.id.nav_report:
+                Intent intent3 = new Intent(this, ReportActivity.class);
+                startActivity(intent3);
                 break;
             case R.id.nav_share:
-
+                Intent intent4 = new Intent(this, NewUserActivity.class);
+                startActivity(intent4);
                 break;
             case R.id.nav_send:
 
