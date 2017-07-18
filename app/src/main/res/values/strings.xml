@@ -7,4 +7,16 @@
     <string name="action_settings">Settings</string>
     <string name="nav_guest_user">Guest User</string>
     <string name="nav_email_address">Please Login first to use this application</string>
+    <string name="about_us">About us</string>
+    <string name="add_new_medicine">Add new medicine</string>
+    <string name="communicate">Communicate</string>
+    <string name="history_report">History/Report</string>
+    <string name="my_profile">My Profile</string>
+    <string name="share">Share</string>
+    <string name="medicine_time">Medicine Time</string>
+    <string name="next_doze">Next\nDoze</string>
+    <string name="today_total">Todays \nTotal</string>
+    <string name="take_action">Take \nAction</string>
+    <string name="see_detail">See\nDetail</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 </resources>
