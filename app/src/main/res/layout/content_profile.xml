@@ -10,11 +10,9 @@
     tools:showIn="@layout/activity_profile">
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/userPhoto"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginTop="5dp"
         android:scaleType="fitXY"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -22,71 +20,79 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/ic_launcher_round"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/user_image_photo" />
 
     <TextView
         android:id="@+id/textView8"
         style="@style/profile_textView"
-        android:text="Name:"
+        android:layout_width="50dp"
+        android:text="@string/user_name"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintTop_toBottomOf="@+id/userPhoto"
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="65dp" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/nameProfile"
         style="@style/profile_textView"
-        android:text="TextView"
+        android:text="@string/guest_user_defualt"
         android:textColor="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@+id/userPhoto"
         app:layout_constraintLeft_toRightOf="@+id/textView8"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="70dp" />
 
     <TextView
         android:id="@+id/textView10"
         style="@style/profile_textView"
-        android:text="Age:"
+        android:layout_width="50dp"
+        android:text="@string/new_user_age"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/textView11"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="25dp" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/ageProfile"
         style="@style/profile_textView"
-        android:text="TextView"
+        android:layout_marginTop="25dp"
+        android:text="@string/guest_user_defualt"
         android:textColor="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@+id/nameProfile"
         app:layout_constraintLeft_toRightOf="@+id/textView10"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        android:layout_marginStart="70dp" />
 
     <TextView
         android:id="@+id/textView12"
         style="@style/profile_textView"
-        android:layout_marginTop="25dp"
-        android:text="Email:"
+        android:layout_width="50dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/user_email"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/textView13"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        android:layout_marginStart="65dp" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/emailProfile"
         style="@style/profile_textView"
-        android:text="TextView"
+        android:layout_marginTop="22dp"
+        android:text="@string/guest_user_defualt"
         android:textColor="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@+id/ageProfile"
         app:layout_constraintLeft_toRightOf="@+id/textView12"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11"
-        android:layout_marginTop="25dp" />
+        android:layout_marginStart="70dp" />
 
     <Button
         android:id="@+id/btnNewUser"
         style="@style/defualt_button"
-        android:text="Add New User"
+        android:text="@string/add_new_user"
         android:onClick="createNewUser"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -96,9 +102,10 @@
     <Button
         android:id="@+id/button4"
         style="@style/defualt_button"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Switch User"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/switch_user"
+        android:onClick="switchUserHandler"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="8dp"

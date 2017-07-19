@@ -30,4 +30,19 @@
     </string-array>
     <string name="title_activity_report">ReportActivity</string>
     <string name="title_activity_new_user">NewUserActivity</string>
+    <string name="dosage">Dosage</string>
+    <string name="new_medicine">New Medicine</string>
+    <string name="string_new_medicine">New Medicine</string>
+    <string name="newname">NewName</string>
+    <string name="remarks">Remarks</string>
+    <string name="btnsubmit">Submit</string>
+    <string name="times_per_day">Times per day</string>
+    <string name="total_days">Total days</string>
+    <string name="guest_user_defualt">Guest User</string>
+    <string name="add_new_user">Add New User</string>
+    <string name="new_user_age">Age:</string>
+    <string name="user_email">Email:</string>
+    <string name="user_name">Name:</string>
+    <string name="switch_user">Switch User</string>
+    <string name="user_image_photo">UserPhoto</string>
 </resources>
