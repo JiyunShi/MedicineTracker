@@ -13,9 +13,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    User currentUser;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +44,27 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        View hView = navigationView.getHeaderView(0);
+        currentUser = JSONHelper.getCurrentUser(this);
+        if(currentUser==null){
+            currentUser = new User();
+            currentUser.setName("Guest User");
+            currentUser.setEmail("Please sign up asap!");
+            currentUser.setAge(0);
+        }
+        TextView mainUserName = hView.findViewById(R.id.userNameMain);
+        TextView emailMain = hView.findViewById(R.id.emailMain);
+        mainUserName.setText(currentUser.getName());
+        emailMain.setText(currentUser.getEmail());
 
+
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -83,21 +105,23 @@ public class MainActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_profile:
-                Intent intent1 = new Intent(this, ProfileActivity.class);
-                startActivity(intent1);
+                Intent intentProfile = new Intent(this, ProfileActivity.class);
+                intentProfile.putExtra("currentUser", new Gson().toJson(currentUser));
+                startActivity(intentProfile);
 
                 break;
             case R.id.nav_add_newMedicine:
-                Intent intent2 = new Intent(this, AddMedicineActivity.class);
-                startActivity(intent2);
+                Intent intentNewMedicine = new Intent(this, AddMedicineActivity.class);
+                intentNewMedicine.putExtra("currentUser", new Gson().toJson(currentUser));
+                startActivity(intentNewMedicine);
                 break;
             case R.id.nav_report:
-                Intent intent3 = new Intent(this, ReportActivity.class);
-                startActivity(intent3);
+                Intent intentReport = new Intent(this, ReportActivity.class);
+                intentReport.putExtra("currentUser", new Gson().toJson(currentUser));
+                startActivity(intentReport);
                 break;
             case R.id.nav_share:
-                Intent intent4 = new Intent(this, NewUserActivity.class);
-                startActivity(intent4);
+
                 break;
             case R.id.nav_send:
 
@@ -107,5 +131,12 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+
+    public void takeActionHandler(View view) {
+
+
     }
 }

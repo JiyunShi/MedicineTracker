@@ -22,6 +22,7 @@
         <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"
+            android:launchMode="singleTop"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -50,11 +51,11 @@
             android:name=".NewUserActivity"
             android:label="@string/title_activity_new_user"
             android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.example.niceday.medicinetracker.ProfileActivity"
             >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value="com.example.niceday.medicinetracker.ProfileActivity"/>
         </activity>
     </application>
 

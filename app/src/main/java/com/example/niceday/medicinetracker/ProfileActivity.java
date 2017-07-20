@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -18,7 +20,7 @@ public class ProfileActivity extends AppCompatActivity {
     TextView userName;
     TextView userAge;
     TextView userEmail;
-
+    User currentUser;
 
 
     @Override
@@ -36,18 +38,22 @@ public class ProfileActivity extends AppCompatActivity {
         userAge = (TextView) findViewById(R.id.ageProfile);
         userEmail = (TextView) findViewById(R.id.emailProfile);
 
-
-
+        String jsonUserObject="";
+        Bundle extras = getIntent().getExtras();
+        if(extras !=null){
+            jsonUserObject = extras.getString("currentUser");
+        }
+        currentUser = new Gson().fromJson(jsonUserObject, User.class);
+        userName.setText(currentUser.getName());
+        userAge.setText(Integer.toString(currentUser.getAge()));
+        userEmail.setText(currentUser.getEmail());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        User currentUser = JSONHelper.getCurrentUser(this);
 
-        userName.setText(currentUser.getName());
-        userAge.setText(Integer.toString(currentUser.getAge()));
-        userEmail.setText(currentUser.getEmail());
+
     }
 
     public void createNewUser(View view){

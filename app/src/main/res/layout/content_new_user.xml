@@ -9,12 +9,12 @@
     tools:showIn="@layout/activity_new_user">
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/txtNewMedicineTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="cursive"
-        android:text="New User"
+        android:text="@string/new_user"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="@color/colorPrimary"
         android:textSize="36sp"
@@ -31,7 +31,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/txtNewMedicineTitle"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:id="@+id/newInputLayout1">
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="serif"
-            android:hint="NewName"
+            android:hint="@string/newname"
             android:inputType="textPersonName"
             android:textColor="@color/primaryLight" />
     </android.support.design.widget.TextInputLayout>
@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="serif"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:textColor="@color/primaryLight" />
     </android.support.design.widget.TextInputLayout>
@@ -98,7 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="serif"
-            android:hint="Age"
+            android:hint="@string/new_user_age"
             android:inputType="number"
             android:textColor="@color/primaryLight" />
     </android.support.design.widget.TextInputLayout>
@@ -115,14 +115,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="male" />
+            android:text="@string/male" />
 
         <RadioButton
             android:id="@+id/genderFemale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="female" />
+            android:text="@string/female" />
     </RadioGroup>
 
     <android.support.design.widget.TextInputLayout
@@ -143,7 +143,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="serif"
-            android:hint="Email Address"
+            android:hint="@string/email_address"
             android:textColor="@color/primaryLight" />
     </android.support.design.widget.TextInputLayout>
 
@@ -156,7 +156,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:text="Sign up"
+        android:text="@string/sign_up"
         android:onClick="signUpHandler"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

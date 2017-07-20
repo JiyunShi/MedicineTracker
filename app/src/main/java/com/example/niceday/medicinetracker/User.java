@@ -13,6 +13,15 @@ public class User {
     String password = "0000000";
     String email = "guest@testing.com";
     boolean isMale = true;
+
+    public List<Plan> getPlans() {
+        return plans;
+    }
+
+    public void setPlans(List<Plan> plans) {
+        this.plans = plans;
+    }
+
     List<Plan> plans = new ArrayList<Plan>();
     int age = 0;
 

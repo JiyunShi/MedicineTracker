@@ -1,5 +1,6 @@
 package com.example.niceday.medicinetracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -59,6 +60,11 @@ public class NewUserActivity extends AppCompatActivity {
 
         if(result) Toast.makeText(this, "create New User Successfully!!", Toast.LENGTH_LONG).show();
         else Toast.makeText(this,"create New User failed", Toast.LENGTH_LONG).show();
+
+        Intent backtoHome = new Intent(this, MainActivity.class);
+        backtoHome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(backtoHome);
+        this.finish();;
 
 
     }

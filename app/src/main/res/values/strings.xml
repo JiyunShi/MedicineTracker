@@ -45,4 +45,13 @@
     <string name="user_name">Name:</string>
     <string name="switch_user">Switch User</string>
     <string name="user_image_photo">UserPhoto</string>
+    <string name="new_user">New User</string>
+    <string name="password">Password</string>
+    <string name="male">male</string>
+    <string name="email_address">Email Address</string>
+    <string name="sign_up">Sign up</string>
+    <string name="female">female</string>
+    <string name="morning">Morning</string>
+    <string name="evening">Evening</string>
+    <string name="afternoon">Afternoon</string>
 </resources>

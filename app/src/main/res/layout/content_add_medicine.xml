@@ -9,7 +9,7 @@
     tools:showIn="@layout/activity_add_medicine">
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/txtNewMedicineTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -29,7 +29,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/txtNewMedicineTitle"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:id="@+id/textInputLayout1">
@@ -76,44 +76,57 @@
         tools:layout_editor_absoluteX="192dp" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/medicineUnits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
         android:layout_marginTop="30dp"
         android:entries="@array/units"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout1"
-        android:layout_marginStart="7dp"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline" />
+        app:layout_constraintLeft_toLeftOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout1" />
 
-
-    <android.support.design.widget.TextInputLayout
+    <CheckBox
+        android:id="@+id/ckboxMorning"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="12dp"
+        android:fontFamily="serif"
+        android:text="@string/morning"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:id="@+id/textInputLayout3"
-        app:layout_constraintRight_toLeftOf="@+id/guideline">
+        app:layout_constraintLeft_toLeftOf="parent" />
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/times"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="serif"
-            android:hint="@string/times_per_day"
-            android:inputType="numberSigned"
-            android:textColor="@color/primaryLight" />
-    </android.support.design.widget.TextInputLayout>
+    <CheckBox
+        android:id="@+id/ckboxAfternoon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="serif"
+        android:text="@string/afternoon"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+        app:layout_constraintLeft_toRightOf="@+id/ckboxMorning"
+        android:layout_marginStart="10dp" />
 
+    <CheckBox
+        android:id="@+id/ckboxEvening"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="serif"
+        android:text="@string/evening"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+        app:layout_constraintLeft_toRightOf="@+id/ckboxAfternoon"
+        android:layout_marginStart="10dp" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
+        app:layout_constraintTop_toBottomOf="@+id/ckboxMorning"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:id="@+id/textInputLayout4"
@@ -159,10 +172,15 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/btnsubmit"
+        android:onClick="addNewMedicineHandler"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout5" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout5"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+
+
 
 
 </android.support.constraint.ConstraintLayout>
