@@ -55,7 +55,7 @@ public class NewUserActivity extends AppCompatActivity {
         else if(genderFemale.isChecked()) newUser.setMale(false);
         userList.add(newUser);
 
-        boolean result = JSONHelper.exportToJSON(this, userList);
+        boolean result = JSONHelper.updateDB(this, userList, newUser.getName());
 
         if(result) Toast.makeText(this, "create New User Successfully!!", Toast.LENGTH_LONG).show();
         else Toast.makeText(this,"create New User failed", Toast.LENGTH_LONG).show();

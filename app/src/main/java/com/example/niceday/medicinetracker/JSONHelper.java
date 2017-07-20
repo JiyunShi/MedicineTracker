@@ -22,15 +22,17 @@ public class JSONHelper {
     public static final String FILE_NAME  = "db_users.json";
     public static final String TAG = "JSONHelper";
 
-    public static boolean exportToJSON(Context context, List<User> userList){
+    public static boolean updateDB(Context context, List<User> userList, String currentUser){
 
         Users userdb = new Users();
         userdb.setUsers(userList);
+        userdb.setCurrentUserName(currentUser);
+
 
         Gson gson = new Gson();
         String jsonString = gson.toJson(userdb);
 
-        Log.i(TAG, "exportTOJSON: "+jsonString);
+
         FileOutputStream fileOutputStream = null;
         File file = new File(FILE_NAME);
         try {
@@ -50,7 +52,7 @@ public class JSONHelper {
         return false;
     }
 
-    public static List<User> importFromJSON(Context context){
+    public static Users getDB(Context context){
 
         FileReader reader = null;
 
@@ -59,7 +61,7 @@ public class JSONHelper {
             reader = new FileReader(file);
             Gson gson = new Gson();
             Users userdb = gson.fromJson(reader, Users.class);
-            return userdb.getUsers();
+            return userdb;
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -76,11 +78,31 @@ public class JSONHelper {
         return null;
     }
 
+    public static User getCurrentUser(Context context){
+        Users userdb = getDB(context);
+        List<User> userlist = userdb.getUsers();
+        String currentUser = userdb.getCurrentUserName();
+        for(int i=0;i<userlist.size();i++){
+            if(userlist.get(i).getName().equals(currentUser)){
+                return userlist.get(i);
+            }
+        }
+        return null;
+    }
 
 
 
     static class Users{
         List<User> users;
+        String currentUserName = "";
+
+        public String getCurrentUserName() {
+            return currentUserName;
+        }
+
+        public void setCurrentUserName(String currentUserName) {
+            this.currentUserName = currentUserName;
+        }
 
         public List<User> getUsers() {
             return users;

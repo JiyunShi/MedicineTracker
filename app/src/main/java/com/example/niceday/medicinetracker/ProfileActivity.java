@@ -37,9 +37,18 @@ public class ProfileActivity extends AppCompatActivity {
         userEmail = (TextView) findViewById(R.id.emailProfile);
 
 
+
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        User currentUser = JSONHelper.getCurrentUser(this);
 
+        userName.setText(currentUser.getName());
+        userAge.setText(Integer.toString(currentUser.getAge()));
+        userEmail.setText(currentUser.getEmail());
+    }
 
     public void createNewUser(View view){
         //Intent intent1 = new Intent(ProfileActivity.this, NewUserActivity.class);
@@ -51,10 +60,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void switchUserHandler(View view) {
 
-        User currentUser = JSONHelper.importFromJSON(this).get(0);
-        userName.setText(currentUser.getName());
-        userAge.setText(Integer.toString(currentUser.getAge()));
-        userEmail.setText(currentUser.getEmail());
+
+
 
 
     }
