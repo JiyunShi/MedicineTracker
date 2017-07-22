@@ -130,9 +130,6 @@ public class MainActivity extends AppCompatActivity
                 intentReport.putExtra("currentUser", new Gson().toJson(currentUser));
                 startActivity(intentReport);
                 break;
-            case R.id.nav_share:
-
-                break;
             case R.id.nav_send:
 
                 break;
@@ -257,8 +254,7 @@ public class MainActivity extends AppCompatActivity
 
             newPlans.add(MedicineToTake);
             currentUser.setPlans(newPlans);
-            List<User> updatedUserList = new ArrayList<User>();
-            updatedUserList.add(currentUser);
+            List<User> updatedUserList = JSONHelper.updateDBprefix(this,currentUser);
             JSONHelper.updateDB(this, updatedUserList, currentUser.getName());
         }
 

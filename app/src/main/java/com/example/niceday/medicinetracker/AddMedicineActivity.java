@@ -74,7 +74,7 @@ public class AddMedicineActivity extends AppCompatActivity {
 
         plans.add(newplan);
         currentUser.setPlans(plans);
-        userList.add(currentUser);
+        userList = JSONHelper.updateDBprefix(this,currentUser);
         boolean result = JSONHelper.updateDB(this, userList, currentUser.getName());
 
         if(result) Toast.makeText(this, "create new Medicine Plan Successfully!!", Toast.LENGTH_LONG).show();

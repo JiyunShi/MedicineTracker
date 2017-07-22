@@ -54,6 +54,11 @@ public class NewUserActivity extends AppCompatActivity {
         newUser.setEmail(newEmail.getText().toString());
         if(genderMale.isChecked()) newUser.setMale(true);
         else if(genderFemale.isChecked()) newUser.setMale(false);
+
+
+        if(JSONHelper.getDB(this)==null) userList = new ArrayList<User>();
+        else userList = JSONHelper.getDB(this).getUsers();
+
         userList.add(newUser);
 
         boolean result = JSONHelper.updateDB(this, userList, newUser.getName());

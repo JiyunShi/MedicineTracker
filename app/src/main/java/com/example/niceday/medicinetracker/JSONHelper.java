@@ -20,7 +20,6 @@ import static android.content.Context.MODE_PRIVATE;
 public class JSONHelper {
 
     public static final String FILE_NAME  = "db_users.json";
-    public static final String TAG = "JSONHelper";
 
     public static boolean updateDB(Context context, List<User> userList, String currentUser){
 
@@ -53,6 +52,23 @@ public class JSONHelper {
     }
 
 
+    public static List<User> updateDBprefix(Context context, User currentUser){
+        List<User> userList = JSONHelper.getDB(context).getUsers();
+        String currentUserName = currentUser.getName();
+        for(int i=0; i<userList.size();i++){
+            if(userList.get(i).getName().equals(currentUserName)) {
+                userList.remove(i);
+                break;
+            }
+        }
+
+        userList.add(currentUser);
+
+        return userList;
+    }
+
+
+
     public static Users getDB(Context context){
 
         FileReader reader = null;
@@ -66,6 +82,7 @@ public class JSONHelper {
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            return null;
         } finally {
             if (reader !=null){
                 try {
@@ -76,7 +93,7 @@ public class JSONHelper {
             }
 
         }
-        return null;
+
     }
 
     public static User getCurrentUser(Context context){
