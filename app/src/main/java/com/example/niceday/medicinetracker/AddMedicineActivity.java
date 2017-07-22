@@ -1,8 +1,6 @@
 package com.example.niceday.medicinetracker;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -14,7 +12,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static java.lang.System.currentTimeMillis;
@@ -35,6 +33,7 @@ public class AddMedicineActivity extends AppCompatActivity {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("New Medicine");
 
         newMedicineName = (TextView) findViewById(R.id.newMedicineName);
         dosage = (TextView) findViewById(R.id.dosage);
@@ -58,7 +57,7 @@ public class AddMedicineActivity extends AppCompatActivity {
         plans = currentUser.getPlans();
 
         //get input
-        Plan newplan = new Plan();
+
         String newName = newMedicineName.getText().toString();
         int newDosage = Integer.parseInt(dosage.getText().toString());
         int total = Integer.parseInt(totaldays.getText().toString());
@@ -70,16 +69,7 @@ public class AddMedicineActivity extends AppCompatActivity {
         if(ckboxEvening.isChecked()) times[2]=true;
         //plan start time
         long seconds = currentTimeMillis();
-
-
-        newplan.setPlanStartTime(seconds);
-        newplan.setMedName(newName);
-        newplan.setDosage(newDosage);
-        newplan.setTotal(total);
-        newplan.setRemark(remark);
-        newplan.setUnitindex(unit);
-        newplan.setTimesPerDay(times);
-
+        Plan newplan = new Plan(seconds, newDosage, total, unit, newName,remark, times);
 
 
         plans.add(newplan);

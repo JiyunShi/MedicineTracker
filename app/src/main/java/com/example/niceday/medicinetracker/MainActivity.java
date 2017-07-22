@@ -17,11 +17,20 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import static java.lang.System.currentTimeMillis;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     User currentUser;
     NavigationView navigationView;
-
+    List<Plan> currentPlans = new ArrayList<Plan>();
+    TextView nextDoze, todayTotal;
+    int timeindex;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +42,12 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                Intent intentNewMedicine = new Intent(MainActivity.this, AddMedicineActivity.class);
+                intentNewMedicine.putExtra("currentUser", new Gson().toJson(currentUser));
+                startActivity(intentNewMedicine);
+
+
             }
         });
 
@@ -50,7 +63,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        View hView = navigationView.getHeaderView(0);
         currentUser = JSONHelper.getCurrentUser(this);
         if(currentUser==null){
             currentUser = new User();
@@ -58,11 +70,9 @@ public class MainActivity extends AppCompatActivity
             currentUser.setEmail("Please sign up asap!");
             currentUser.setAge(0);
         }
-        TextView mainUserName = hView.findViewById(R.id.userNameMain);
-        TextView emailMain = hView.findViewById(R.id.emailMain);
-        mainUserName.setText(currentUser.getName());
-        emailMain.setText(currentUser.getEmail());
 
+        this.setUpNavText();
+        this.displayNext();
 
     }
     @Override
@@ -133,10 +143,128 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    public void setUpNavText(){
+
+        View hView = navigationView.getHeaderView(0);
+        nextDoze = (TextView) findViewById(R.id.txtNextDoze);
+        todayTotal = (TextView) findViewById(R.id.txtTodayTotal);
+
+        TextView mainUserName = hView.findViewById(R.id.userNameMain);
+        TextView emailMain = hView.findViewById(R.id.emailMain);
+        mainUserName.setText(currentUser.getName());
+        emailMain.setText(currentUser.getEmail());
+
+    }
+
+
+
+
+    //Handle nextDoze TextView content display
+    public void displayNext(){
+
+        currentPlans = currentUser.getPlans();
+        if(currentPlans.size()==0){
+            nextDoze.setText("You don't have any medicine to take right now");
+            todayTotal.setText("You don't have any medicine to take today");
+        }else{
+
+            Plan thisPlan = new Plan();
+            String displayNextDoze ="";
+            String displayTotal = "";
+
+            //set Calendar to today 0:00:00.000
+            Calendar cal = Calendar.getInstance();
+            displayNextDoze += new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime())+ " ";
+            displayTotal += displayNextDoze + "\r\n";
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            long morningStartMilli = cal.getTimeInMillis();
+            //add 8 hours, so it's 8:00:00.000
+            cal.add(Calendar.HOUR_OF_DAY, 8);
+            long morningOverAfternoonStartMilli = cal.getTimeInMillis();
+            //add 8 hours, it's 16:00:00.000
+            cal.add(Calendar.HOUR_OF_DAY,8);
+            long AfternoonOverNightStartMilli = cal.getTimeInMillis();
+            //add 8 hours, it's tomorrow 0:00:00.000
+            cal.add(Calendar.HOUR_OF_DAY,8);
+            long NightOverMilli = cal.getTimeInMillis();
+            long currentTime = currentTimeMillis();
+            if(currentTime>=morningStartMilli&&currentTime<morningOverAfternoonStartMilli){
+                timeindex=0;
+                displayNextDoze +="Morning: \r\n";
+            }else if(currentTime>=morningOverAfternoonStartMilli&&currentTime<AfternoonOverNightStartMilli){
+                timeindex=1;
+                displayNextDoze +="Afternoong: \r\n";
+            }else{
+                timeindex = 2;
+                displayNextDoze +="Evening: \r\n";
+            }
+            boolean flagNext =false, flagTotal = false;
+            for(int i=0; i<currentPlans.size();i++) {
+
+                thisPlan = currentPlans.get(i);
+                String newDay = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
+                if(!thisPlan.getCurrentDay().equals(newDay)){
+                    thisPlan.setCurrentDay(newDay);
+                    for(int j=0; j<3; j++) thisPlan.setHasTaken(false, j);
+                }
+
+                int totalAmount =0;
+                for(int j=0;j<3;j++){
+                    if(thisPlan.getTimesPerDay(j)) totalAmount+=thisPlan.getDosage();
+                }
+                if(thisPlan.getLeftDosage()>0) {
+                    displayTotal += thisPlan.getMedName()+": " +totalAmount + thisPlan.getUnit()+"\r\n";
+                    flagTotal=true;
+                }
+
+
+                if(thisPlan.getLeftDosage()>0&&thisPlan.getTimesPerDay(timeindex)){
+                    displayNextDoze += thisPlan.getMedName()+": "+thisPlan.getDosage()+ thisPlan.getUnit()+"\r\n";
+                    flagNext=true;
+                    if(thisPlan.getHasTaken(timeindex)) displayNextDoze +="--done \r\n";
+                }
+
+            }
+            if(flagNext) nextDoze.setText(displayNextDoze);
+            else{
+                displayNextDoze +="You don't have any medicine to take at this time!";
+                nextDoze.setText(displayNextDoze);
+            }
+            if(flagTotal) todayTotal.setText(displayTotal);
+            else{
+                displayTotal +="You don't have any medicine to take today!";
+                todayTotal.setText(displayTotal);
+            }
+        }
+
+    }
+
+
 
 
     public void takeActionHandler(View view) {
+        Plan MedicineToTake = new Plan();
+        List<Plan> newPlans = new ArrayList<Plan>();
+        for(int i= 0; i<currentPlans.size();i++){
+            MedicineToTake = currentPlans.get(i);
+            if(MedicineToTake.getLeftDosage()>0&&MedicineToTake.getTimesPerDay(timeindex)&&!MedicineToTake.getHasTaken(timeindex)){
+                MedicineToTake.setLeftDosage(MedicineToTake.getLeftDosage()-MedicineToTake.getDosage());
+                MedicineToTake.setHasTaken(true, timeindex);
+            }
 
+            newPlans.add(MedicineToTake);
+            currentUser.setPlans(newPlans);
+            List<User> updatedUserList = new ArrayList<User>();
+            updatedUserList.add(currentUser);
+            JSONHelper.updateDB(this, updatedUserList, currentUser.getName());
+        }
+
+
+        finish();
+        startActivity(getIntent());
 
     }
 }

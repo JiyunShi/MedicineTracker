@@ -53,14 +53,6 @@ public class JSONHelper {
     }
 
 
-
-
-
-
-
-
-
-
     public static Users getDB(Context context){
 
         FileReader reader = null;
@@ -89,6 +81,8 @@ public class JSONHelper {
 
     public static User getCurrentUser(Context context){
         Users userdb = getDB(context);
+        if(userdb==null) return null;
+
         List<User> userlist = userdb.getUsers();
         String currentUser = userdb.getCurrentUserName();
         for(int i=0;i<userlist.size();i++){
