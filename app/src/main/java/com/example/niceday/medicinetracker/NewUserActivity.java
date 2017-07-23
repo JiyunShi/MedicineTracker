@@ -1,11 +1,13 @@
 package com.example.niceday.medicinetracker;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -48,12 +50,33 @@ public class NewUserActivity extends AppCompatActivity {
     public void signUpHandler(View view) {
 
         User newUser = new User();
-        newUser.setName(newUserName.getText().toString());
-        newUser.setPassword(newPassword.getText().toString());
-        newUser.setAge(Integer.parseInt(newAge.getText().toString()));
+        newUser.setName(newUserName.getText().toString().trim());
+        //validate name input
+        if(this.nameValid(newUser.getName())) return;
+        newUser.setPassword(newPassword.getText().toString().trim());
+        //validate pw input
+        if(newUser.getPassword().isEmpty()){
+            Toast.makeText(NewUserActivity.this, "Please input your password", Toast.LENGTH_LONG).show();
+            return;
+        }
+        try{
+        newUser.setAge(Integer.parseInt(newAge.getText().toString()));}
+        catch (Exception e){
+            Toast.makeText(NewUserActivity.this, "Please input your age correctly", Toast.LENGTH_LONG).show();
+            return;
+        }
         newUser.setEmail(newEmail.getText().toString());
-        if(genderMale.isChecked()) newUser.setMale(true);
-        else if(genderFemale.isChecked()) newUser.setMale(false);
+        if(newUser.getEmail().isEmpty()) {
+            Toast.makeText(NewUserActivity.this, "Please input your email correctly", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(genderMale.isChecked()||genderFemale.isChecked()) {
+            if (genderMale.isChecked()) newUser.setMale(true);
+            else if (genderFemale.isChecked()) newUser.setMale(false);
+        }else{
+            Toast.makeText(NewUserActivity.this, "Please select your gender correctly", Toast.LENGTH_LONG).show();
+            return;
+        }
 
 
         if(JSONHelper.getDB(this)==null) userList = new ArrayList<User>();
@@ -73,4 +96,25 @@ public class NewUserActivity extends AppCompatActivity {
 
 
     }
+
+    public boolean nameValid(String name){
+        if(name.isEmpty()){
+            Toast.makeText(NewUserActivity.this, "Please input your username", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        if(JSONHelper.getDB(NewUserActivity.this)==null) return false;
+
+        List<User> userlist = JSONHelper.getDB(NewUserActivity.this).getUsers();
+        for(int i=0; i<userlist.size();i++){
+            if(name.equals(userlist.get(i).getName())){
+                Toast.makeText(NewUserActivity.this, "User name is already exist, please try another name", Toast.LENGTH_LONG).show();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+
 }
