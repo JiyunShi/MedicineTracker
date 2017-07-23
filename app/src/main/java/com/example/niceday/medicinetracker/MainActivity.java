@@ -1,9 +1,10 @@
 package com.example.niceday.medicinetracker;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity
     List<Plan> currentPlans = new ArrayList<Plan>();
     TextView nextDoze, todayTotal;
     int timeindex;
+    boolean flagNext =false, flagTotal = false, flagNoTaken=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,6 +171,7 @@ public class MainActivity extends AppCompatActivity
             Plan thisPlan = new Plan();
             String displayNextDoze ="";
             String displayTotal = "";
+            String displayNextDozeTemp="";
 
             //set Calendar to today 0:00:00.000
             Calendar cal = Calendar.getInstance();
@@ -198,7 +202,8 @@ public class MainActivity extends AppCompatActivity
                 timeindex = 2;
                 displayNextDoze +="Evening: \r\n";
             }
-            boolean flagNext =false, flagTotal = false;
+            displayNextDozeTemp = displayNextDoze;
+
             for(int i=0; i<currentPlans.size();i++) {
 
                 thisPlan = currentPlans.get(i);
@@ -221,11 +226,20 @@ public class MainActivity extends AppCompatActivity
                 if(thisPlan.getLeftDosage()>0&&thisPlan.getTimesPerDay(timeindex)){
                     displayNextDoze += thisPlan.getMedName()+": "+thisPlan.getDosage()+ thisPlan.getUnit()+"\r\n";
                     flagNext=true;
-                    if(thisPlan.getHasTaken(timeindex)) displayNextDoze +="--done \r\n";
+                    flagNoTaken=true;
+                    if(thisPlan.getHasTaken(timeindex)) {
+                        displayNextDoze +="--done \r\n";
+                        flagNoTaken=false;
+                    }
                 }
 
             }
-            if(flagNext) nextDoze.setText(displayNextDoze);
+            if(flagNext&&flagNoTaken) nextDoze.setText(displayNextDoze);
+            else if(flagNext&&!flagNoTaken){
+                displayNextDoze = displayNextDozeTemp;
+                displayNextDoze +="You have taken all medicines already at this time!";
+                nextDoze.setText(displayNextDoze);
+            }
             else{
                 displayNextDoze +="You don't have any medicine to take at this time!";
                 nextDoze.setText(displayNextDoze);
@@ -243,24 +257,42 @@ public class MainActivity extends AppCompatActivity
 
 
     public void takeActionHandler(View view) {
-        Plan MedicineToTake = new Plan();
-        List<Plan> newPlans = new ArrayList<Plan>();
-        for(int i= 0; i<currentPlans.size();i++){
-            MedicineToTake = currentPlans.get(i);
-            if(MedicineToTake.getLeftDosage()>0&&MedicineToTake.getTimesPerDay(timeindex)&&!MedicineToTake.getHasTaken(timeindex)){
-                MedicineToTake.setLeftDosage(MedicineToTake.getLeftDosage()-MedicineToTake.getDosage());
-                MedicineToTake.setHasTaken(true, timeindex);
-            }
 
-            newPlans.add(MedicineToTake);
-            currentUser.setPlans(newPlans);
-            List<User> updatedUserList = JSONHelper.updateDBprefix(this,currentUser);
-            JSONHelper.updateDB(this, updatedUserList, currentUser.getName());
+        if(flagNext&&!flagNoTaken){
+            Toast.makeText(this, "You have already taken all the medcine at this time, come back later for next time!!", Toast.LENGTH_LONG).show();
+        }else {
+
+            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+            alertDialog.setTitle("Has taken the medicine?");
+            alertDialog.setMessage("Are you sure you have taken these medicine already?");
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface arg0, int arg1) {
+                    Plan MedicineToTake = new Plan();
+                    List<Plan> newPlans = new ArrayList<Plan>();
+                    for (int i = 0; i < currentPlans.size(); i++) {
+                        MedicineToTake = currentPlans.get(i);
+                        if (MedicineToTake.getLeftDosage() > 0 && MedicineToTake.getTimesPerDay(timeindex) && !MedicineToTake.getHasTaken(timeindex)) {
+                            MedicineToTake.setLeftDosage(MedicineToTake.getLeftDosage() - MedicineToTake.getDosage());
+                            MedicineToTake.setHasTaken(true, timeindex);
+                        }
+
+                        newPlans.add(MedicineToTake);
+                        currentUser.setPlans(newPlans);
+                        List<User> updatedUserList = JSONHelper.updateDBprefix(MainActivity.this, currentUser);
+                        JSONHelper.updateDB(MainActivity.this, updatedUserList, currentUser.getName());
+                    }
+
+
+                    finish();
+                    startActivity(getIntent());
+                }
+            });
+            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface arg0, int arg1) {
+                }
+            });
+
+            alertDialog.show();
         }
-
-
-        finish();
-        startActivity(getIntent());
-
     }
 }
