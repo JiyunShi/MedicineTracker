@@ -218,13 +218,13 @@ public class MainActivity extends AppCompatActivity
                     if(thisPlan.getTimesPerDay(j)) totalAmount+=thisPlan.getDosage();
                 }
                 if(thisPlan.getLeftDosage()>0) {
-                    displayTotal += thisPlan.getMedName()+": " +totalAmount + thisPlan.getUnit()+"\r\n";
+                    displayTotal += thisPlan.getMedName()+": " +totalAmount +" " + thisPlan.getUnit()+"\r\n";
                     flagTotal=true;
                 }
 
 
                 if(thisPlan.getLeftDosage()>0&&thisPlan.getTimesPerDay(timeindex)){
-                    displayNextDoze += thisPlan.getMedName()+": "+thisPlan.getDosage()+ thisPlan.getUnit()+"\r\n";
+                    displayNextDoze += thisPlan.getMedName()+": "+thisPlan.getDosage()+" "+thisPlan.getUnit()+"\r\n";
                     flagNext=true;
                     flagNoTaken=true;
                     if(thisPlan.getHasTaken(timeindex)) {
@@ -257,8 +257,10 @@ public class MainActivity extends AppCompatActivity
 
 
     public void takeActionHandler(View view) {
-
-        if(flagNext&&!flagNoTaken){
+        if(currentPlans.size()==0){
+            Toast.makeText(this, "You don't have any medicine to take, Please add some first!!", Toast.LENGTH_LONG).show();
+        }
+        else if(flagNext&&!flagNoTaken){
             Toast.makeText(this, "You have already taken all the medcine at this time, come back later for next time!!", Toast.LENGTH_LONG).show();
         }else {
 

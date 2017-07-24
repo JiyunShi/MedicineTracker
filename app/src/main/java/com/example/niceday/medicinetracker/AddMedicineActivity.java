@@ -58,15 +58,41 @@ public class AddMedicineActivity extends AppCompatActivity {
 
         //get input
 
-        String newName = newMedicineName.getText().toString();
-        int newDosage = Integer.parseInt(dosage.getText().toString());
-        int total = Integer.parseInt(totaldays.getText().toString());
+        String newName = newMedicineName.getText().toString().trim();
+        if(newName.isEmpty()){
+            Toast.makeText(this,"Please input the Name of the new medicine!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        for (int i =0; i< plans.size();i++){
+            if(newName.equals(plans.get(i).getMedName())) {
+                Toast.makeText(this, "The medicine is already exist, please double check", Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
+        int newDosage,total;
+        try{
+            newDosage = Integer.parseInt(dosage.getText().toString().trim());}
+        catch (Exception e){
+            Toast.makeText(this, "Please input your dosage for this medicine corrrectly", Toast.LENGTH_LONG).show();
+            return;
+        }
+        try{
+            total = Integer.parseInt(totaldays.getText().toString());}
+        catch (Exception e){
+            Toast.makeText(this, "Please input the total taking days for this medicine corrrectly", Toast.LENGTH_LONG).show();
+            return;
+        }
         String remark = medicineRemark.getText().toString();
         int unit = medicineUnits.getSelectedItemPosition();
         boolean[] times={false,false,false};
         if(ckboxMorning.isChecked()) times[0]=true;
         if(ckboxAfternoon.isChecked()) times[1]=true;
         if(ckboxEvening.isChecked()) times[2]=true;
+        if(!(ckboxMorning.isChecked()||ckboxAfternoon.isChecked()||ckboxEvening.isChecked())){
+            Toast.makeText(this, "Please select at least one time per day", Toast.LENGTH_LONG).show();
+            return;
+        }
         //plan start time
         long seconds = currentTimeMillis();
         Plan newplan = new Plan(seconds, newDosage, total, unit, newName,remark, times);
