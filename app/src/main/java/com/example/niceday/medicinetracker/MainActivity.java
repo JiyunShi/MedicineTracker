@@ -72,6 +72,9 @@ public class MainActivity extends AppCompatActivity
             currentUser.setName("Guest User");
             currentUser.setEmail("Please sign up asap!");
             currentUser.setAge(0);
+            List<User> guestUsers = new ArrayList<User>();
+            guestUsers.add(currentUser);
+            JSONHelper.updateDB(this, guestUsers,currentUser.getName());
         }
 
         this.setUpNavText();
