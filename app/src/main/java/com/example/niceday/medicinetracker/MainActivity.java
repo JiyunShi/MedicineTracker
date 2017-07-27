@@ -300,4 +300,43 @@ public class MainActivity extends AppCompatActivity
             alertDialog.show();
         }
     }
+
+
+    public void showDetialHandler(View view) {
+        if(currentPlans.size()==0){
+            Toast.makeText(this, "You don't have any medicine to take, Please add some first!!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        Plan thisPlan;
+        for(int i=0; i<currentPlans.size();i++) {
+
+            thisPlan = currentPlans.get(i);
+            String displayTotal="";
+            String frenquence ="";
+            String[] dayTime = {" Morning", " Afternoon", " Evening"};
+            String underScore = "\r\n_____________________________________________\r\n \r\n";
+            int totalAmount =0;
+            for(int j=0;j<3;j++){
+                if(thisPlan.getTimesPerDay(j)) {
+                    totalAmount+=thisPlan.getDosage();
+                    frenquence+= dayTime[j];
+                }
+            }
+            if(thisPlan.getLeftDosage()>0) {
+                displayTotal += "Medicine Name:     " +thisPlan.getMedName()+"\r\nToday's Total:    " +totalAmount +" " + thisPlan.getUnit()+"\r\nTake When:    "+frenquence +"\r\nTotal amounts:   "
+                        +thisPlan.getTotalDosage()+"\r\nRemark:     "+thisPlan.getRemark()+underScore;
+                flagTotal=true;
+            }
+            if(flagTotal){
+                Intent intentDetail = new Intent(this, ShowDetailActivity.class);
+                intentDetail.putExtra("displayContent", displayTotal);
+                startActivity(intentDetail);
+            }
+
+        }
+
+
+
+
+    }
 }
