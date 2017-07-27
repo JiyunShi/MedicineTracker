@@ -137,7 +137,8 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intentReport);
                 break;
             case R.id.nav_send:
-
+                Intent intentAbout = new Intent(this,AboutUsActivity.class);
+                startActivity(intentAbout);
                 break;
         }
 
@@ -324,7 +325,7 @@ public class MainActivity extends AppCompatActivity
             }
             if(thisPlan.getLeftDosage()>0) {
                 displayTotal += "Medicine Name:     " +thisPlan.getMedName()+"\r\nToday's Total:    " +totalAmount +" " + thisPlan.getUnit()+"\r\nTake When:    "+frenquence +"\r\nTotal amounts:   "
-                        +thisPlan.getTotalDosage()+"\r\nRemark:     "+thisPlan.getRemark()+underScore;
+                        +thisPlan.getTotalDosage()+" " + thisPlan.getUnit()+"\r\nRemark:     "+thisPlan.getRemark()+underScore;
                 flagTotal=true;
             }
             if(flagTotal){

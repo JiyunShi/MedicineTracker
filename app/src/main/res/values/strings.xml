@@ -58,4 +58,18 @@
     <string name="current_user">Current User:</string>
     <string name="switch_to">Switch To:</string>
     <string name="title_activity_show_detail">ShowDetailActivity</string>
+    <string name="title_activity_about_us">AboutUsActivity</string>
+    <string name="author_name">Author Name:</string>
+    <string name="_300260478">300260478</string>
+    <string name="github">Github:</string>
+    <string name="jiyun_shi">Jiyun Shi</string>
+    <string name="partner">Partner:</string>
+    <string name="shiv">Shiv</string>
+    <string name="student_id">Student ID:</string>
+    <string name="video">Video:</string>
+    <string name="https_github_com_jiyunshi">https://github.com/JiyunShi</string>
+    <string name="tba">tba</string>
+    <string name="loading_detail">Loading Detail...</string>
+    <string name="your_history_report">Your History Report</string>
+    <string name="loading_report">Loading Report...</string>
 </resources>

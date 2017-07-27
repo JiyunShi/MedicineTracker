@@ -12,7 +12,6 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="46dp"
         android:layout_marginTop="45dp"
         android:fontFamily="serif"
         android:text="@string/password"
@@ -26,7 +25,6 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="46dp"
         android:layout_marginTop="45dp"
         android:fontFamily="serif"
         android:text="@string/switch_to"
@@ -79,7 +77,6 @@
         android:id="@+id/spinUserName"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
         android:layout_marginTop="45dp"
         android:spinnerMode="dialog"
         app:layout_constraintLeft_toRightOf="@+id/textView7"
@@ -90,13 +87,13 @@
         android:id="@+id/txtPwinput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="22dp"
         android:layout_marginTop="43dp"
         android:ems="10"
         android:inputType="textPassword"
         app:layout_constraintLeft_toRightOf="@+id/textView9"
         app:layout_constraintTop_toBottomOf="@+id/spinUserName"
-        android:layout_marginStart="22dp" />
+        android:layout_marginStart="22dp"
+        tools:ignore="LabelFor" />
 
 
 
