@@ -72,4 +72,5 @@
     <string name="loading_detail">Loading Detail...</string>
     <string name="your_history_report">Your History Report</string>
     <string name="loading_report">Loading Report...</string>
+    <string name="today_s_detail">Today\'s Detail</string>
 </resources>

@@ -4,10 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Created by NiceDay on 2017-07-19.
- */
 
+//class for medicine plans
 public class Plan {
 
     String MedName;

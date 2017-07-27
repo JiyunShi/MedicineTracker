@@ -3,9 +3,7 @@ package com.example.niceday.medicinetracker;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by NiceDay on 2017-07-19.
- */
+//class for User info
 
 public class User {
 

@@ -46,7 +46,7 @@ public class NewUserActivity extends AppCompatActivity {
         genderMale = (RadioButton) findViewById(R.id.genderMale);
         genderFemale = (RadioButton) findViewById(R.id.genderFemale);
     }
-
+    //handle sign up button
     public void signUpHandler(View view) {
 
         User newUser = new User();
@@ -59,6 +59,7 @@ public class NewUserActivity extends AppCompatActivity {
             Toast.makeText(NewUserActivity.this, "Please input your password", Toast.LENGTH_LONG).show();
             return;
         }
+        //validate age input
         try{
         newUser.setAge(Integer.parseInt(newAge.getText().toString()));}
         catch (Exception e){
@@ -66,10 +67,12 @@ public class NewUserActivity extends AppCompatActivity {
             return;
         }
         newUser.setEmail(newEmail.getText().toString());
+        //validate email input
         if(newUser.getEmail().isEmpty()) {
             Toast.makeText(NewUserActivity.this, "Please input your email correctly", Toast.LENGTH_LONG).show();
             return;
         }
+        //validate gender select
         if(genderMale.isChecked()||genderFemale.isChecked()) {
             if (genderMale.isChecked()) newUser.setMale(true);
             else if (genderFemale.isChecked()) newUser.setMale(false);
@@ -83,7 +86,7 @@ public class NewUserActivity extends AppCompatActivity {
         else userList = JSONHelper.getDB(this).getUsers();
 
         userList.add(newUser);
-
+        //update db json file
         boolean result = JSONHelper.updateDB(this, userList, newUser.getName());
 
         if(result) Toast.makeText(this, "create New User Successfully!!", Toast.LENGTH_LONG).show();
@@ -105,6 +108,7 @@ public class NewUserActivity extends AppCompatActivity {
         if(JSONHelper.getDB(NewUserActivity.this)==null) return false;
 
         List<User> userlist = JSONHelper.getDB(NewUserActivity.this).getUsers();
+        //check if username already existing
         for(int i=0; i<userlist.size();i++){
             if(name.equals(userlist.get(i).getName())){
                 Toast.makeText(NewUserActivity.this, "User name is already exist, please try another name", Toast.LENGTH_LONG).show();

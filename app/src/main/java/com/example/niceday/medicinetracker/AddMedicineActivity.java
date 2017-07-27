@@ -53,12 +53,12 @@ public class AddMedicineActivity extends AppCompatActivity {
             jsonUserObject = extras.getString("currentUser");
         }
         currentUser = new Gson().fromJson(jsonUserObject, User.class);
-
+        //get current medicines for current user
         plans = currentUser.getPlans();
 
         //get input
-
         String newName = newMedicineName.getText().toString().trim();
+        //validate input
         if(newName.isEmpty()){
             Toast.makeText(this,"Please input the Name of the new medicine!", Toast.LENGTH_LONG).show();
             return;
@@ -97,10 +97,11 @@ public class AddMedicineActivity extends AppCompatActivity {
         long seconds = currentTimeMillis();
         Plan newplan = new Plan(seconds, newDosage, total, unit, newName,remark, times);
 
-
+        //add new medicine to the exsiting medicine list
         plans.add(newplan);
         currentUser.setPlans(plans);
         userList = JSONHelper.updateDBprefix(this,currentUser);
+        //rewrite the json db file.
         boolean result = JSONHelper.updateDB(this, userList, currentUser.getName());
 
         if(result) Toast.makeText(this, "create new Medicine Plan Successfully!!", Toast.LENGTH_LONG).show();

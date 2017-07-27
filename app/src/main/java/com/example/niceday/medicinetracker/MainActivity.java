@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //set fab onclick handler, open new activity Add new Medicine.
                 Intent intentNewMedicine = new Intent(MainActivity.this, AddMedicineActivity.class);
                 intentNewMedicine.putExtra("currentUser", new Gson().toJson(currentUser));
                 startActivity(intentNewMedicine);
@@ -66,7 +66,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        //update content onResume.
         currentUser = JSONHelper.getCurrentUser(this);
+        //if open app first time, create default guest user and the json file.
         if(currentUser==null){
             currentUser = new User();
             currentUser.setName("Guest User");
@@ -76,8 +78,9 @@ public class MainActivity extends AppCompatActivity
             guestUsers.add(currentUser);
             JSONHelper.updateDB(this, guestUsers,currentUser.getName());
         }
-
+        //set up Navigation panel content
         this.setUpNavText();
+        //set up medicine display contetn on main page
         this.displayNext();
 
     }
@@ -120,22 +123,25 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         switch (id) {
+            //start profile activity
             case R.id.nav_profile:
                 Intent intentProfile = new Intent(this, ProfileActivity.class);
                 intentProfile.putExtra("currentUser", new Gson().toJson(currentUser));
                 startActivity(intentProfile);
-
                 break;
+            //start new Medicine activity
             case R.id.nav_add_newMedicine:
                 Intent intentNewMedicine = new Intent(this, AddMedicineActivity.class);
                 intentNewMedicine.putExtra("currentUser", new Gson().toJson(currentUser));
                 startActivity(intentNewMedicine);
                 break;
+            //start report activity
             case R.id.nav_report:
                 Intent intentReport = new Intent(this, ReportActivity.class);
                 intentReport.putExtra("currentUser", new Gson().toJson(currentUser));
                 startActivity(intentReport);
                 break;
+            //start about us activity
             case R.id.nav_send:
                 Intent intentAbout = new Intent(this,AboutUsActivity.class);
                 startActivity(intentAbout);
@@ -167,6 +173,7 @@ public class MainActivity extends AppCompatActivity
     public void displayNext(){
 
         currentPlans = currentUser.getPlans();
+        //hanel caes no medicine info for current user
         if(currentPlans.size()==0){
             nextDoze.setText("You don't have any medicine to take right now");
             todayTotal.setText("You don't have any medicine to take today");
@@ -179,12 +186,14 @@ public class MainActivity extends AppCompatActivity
 
             //set Calendar to today 0:00:00.000
             Calendar cal = Calendar.getInstance();
+            //current date in format yyyy-MM-dd.
             displayNextDoze += new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime())+ " ";
             displayTotal += displayNextDoze + "\r\n";
             cal.set(Calendar.HOUR_OF_DAY, 0);
             cal.set(Calendar.MINUTE, 0);
             cal.set(Calendar.SECOND, 0);
             cal.set(Calendar.MILLISECOND, 0);
+            //set flag to indentify morning, afternoon and evening time.
             long morningStartMilli = cal.getTimeInMillis();
             //add 8 hours, so it's 8:00:00.000
             cal.add(Calendar.HOUR_OF_DAY, 8);
@@ -194,14 +203,14 @@ public class MainActivity extends AppCompatActivity
             long AfternoonOverNightStartMilli = cal.getTimeInMillis();
             //add 8 hours, it's tomorrow 0:00:00.000
             cal.add(Calendar.HOUR_OF_DAY,8);
-            long NightOverMilli = cal.getTimeInMillis();
             long currentTime = currentTimeMillis();
+            //compare with current time to define current time range
             if(currentTime>=morningStartMilli&&currentTime<morningOverAfternoonStartMilli){
                 timeindex=0;
                 displayNextDoze +="Morning: \r\n";
             }else if(currentTime>=morningOverAfternoonStartMilli&&currentTime<AfternoonOverNightStartMilli){
                 timeindex=1;
-                displayNextDoze +="Afternoong: \r\n";
+                displayNextDoze +="Afternoon: \r\n";
             }else{
                 timeindex = 2;
                 displayNextDoze +="Evening: \r\n";
@@ -212,21 +221,25 @@ public class MainActivity extends AppCompatActivity
 
                 thisPlan = currentPlans.get(i);
                 String newDay = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
+                //check if it's a new day compare with the record
                 if(!thisPlan.getCurrentDay().equals(newDay)){
                     thisPlan.setCurrentDay(newDay);
+                    //if yes, set all medicine isTaken to false;
                     for(int j=0; j<3; j++) thisPlan.setHasTaken(false, j);
                 }
 
+                //add up total amount for today for this medicine
                 int totalAmount =0;
                 for(int j=0;j<3;j++){
                     if(thisPlan.getTimesPerDay(j)) totalAmount+=thisPlan.getDosage();
                 }
+                //display this medicine if it's still need to take(not finished)
                 if(thisPlan.getLeftDosage()>0) {
                     displayTotal += thisPlan.getMedName()+": " +totalAmount +" " + thisPlan.getUnit()+"\r\n";
                     flagTotal=true;
                 }
 
-
+                //display this medicine in nextDoze, if it need to be taken in current timeline.
                 if(thisPlan.getLeftDosage()>0&&thisPlan.getTimesPerDay(timeindex)){
                     displayNextDoze += thisPlan.getMedName()+": "+thisPlan.getDosage()+" "+thisPlan.getUnit()+"\r\n";
                     flagNext=true;
@@ -239,6 +252,7 @@ public class MainActivity extends AppCompatActivity
 
             }
             if(flagNext&&flagNoTaken) nextDoze.setText(displayNextDoze);
+            //if nothing to taken or all already taken
             else if(flagNext&&!flagNoTaken){
                 displayNextDoze = displayNextDozeTemp;
                 displayNextDoze +="You have taken all medicines already at this time!";
@@ -259,7 +273,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-
+    //handle take action button on main page
     public void takeActionHandler(View view) {
         if(currentPlans.size()==0){
             Toast.makeText(this, "You don't have any medicine to take, Please add some first!!", Toast.LENGTH_LONG).show();
@@ -284,11 +298,12 @@ public class MainActivity extends AppCompatActivity
 
                         newPlans.add(MedicineToTake);
                         currentUser.setPlans(newPlans);
+                        //update the userList, remove the old one and add the updated one
                         List<User> updatedUserList = JSONHelper.updateDBprefix(MainActivity.this, currentUser);
+                        //re write the new userList to the Json file.
                         JSONHelper.updateDB(MainActivity.this, updatedUserList, currentUser.getName());
                     }
-
-
+                    //refresh the current main page
                     finish();
                     startActivity(getIntent());
                 }
@@ -302,7 +317,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
+    //handle show Detail button on main page
     public void showDetialHandler(View view) {
         if(currentPlans.size()==0){
             Toast.makeText(this, "You don't have any medicine to take, Please add some first!!", Toast.LENGTH_LONG).show();
@@ -324,10 +339,12 @@ public class MainActivity extends AppCompatActivity
                 }
             }
             if(thisPlan.getLeftDosage()>0) {
-                displayTotal += "Medicine Name:     " +thisPlan.getMedName()+"\r\nToday's Total:    " +totalAmount +" " + thisPlan.getUnit()+"\r\nTake When:    "+frenquence +"\r\nTotal amounts:   "
+                displayTotal += "Medicine Name:     " +thisPlan.getMedName()+"\r\nToday's Total:    " +totalAmount +" " + thisPlan.getUnit()+"\r\nDosage:    " +thisPlan.getDosage()
+                        +" " + thisPlan.getUnit()+"\r\nTake When:    "+frenquence +"\r\nTotal amounts:   "
                         +thisPlan.getTotalDosage()+" " + thisPlan.getUnit()+"\r\nRemark:     "+thisPlan.getRemark()+underScore;
                 flagTotal=true;
             }
+            //if there's medicine to take today, start the Detial Activity.
             if(flagTotal){
                 Intent intentDetail = new Intent(this, ShowDetailActivity.class);
                 intentDetail.putExtra("displayContent", displayTotal);
