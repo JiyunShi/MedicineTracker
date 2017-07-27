@@ -66,9 +66,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void switchUserHandler(View view) {
 
-
-
-
+        Intent intent2 =new Intent(this, SwitchUserActivity.class);
+        intent2.putExtra("currentUser", new Gson().toJson(currentUser));
+        startActivity(intent2);
 
     }
 }

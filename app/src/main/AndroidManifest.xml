@@ -50,12 +50,20 @@
         <activity
             android:name=".NewUserActivity"
             android:label="@string/title_activity_new_user"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName="com.example.niceday.medicinetracker.ProfileActivity"
-            >
+            android:parentActivityName=".ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.niceday.medicinetracker.ProfileActivity"/>
+                android:value="com.example.niceday.medicinetracker.ProfileActivity" />
+        </activity>
+        <activity
+            android:name=".SwitchUserActivity"
+            android:label="@string/title_activity_switch_user"
+            android:parentActivityName=".ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.niceday.medicinetracker.ProfileActivity" />
         </activity>
     </application>
 
