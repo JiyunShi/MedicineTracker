@@ -324,10 +324,11 @@ public class MainActivity extends AppCompatActivity
             return;
         }
         Plan thisPlan;
+        String displayTotal="";
         for(int i=0; i<currentPlans.size();i++) {
 
             thisPlan = currentPlans.get(i);
-            String displayTotal="";
+
             String frenquence ="";
             String[] dayTime = {" Morning", " Afternoon", " Evening"};
             String underScore = "\r\n_____________________________________________\r\n \r\n";
