@@ -16,7 +16,8 @@ A simple android application help user to track their medicine taking schedule a
 3. Tracking medicine schedule dynamically based on the current time
 4. Record medicing taking history and generate report based on user request
 
-##ScreenShot of the App
+##ScreenShot of the App <br />
+
 ![Front Page with Navigation Draw](/frontWithNavigation.png?raw=true "FrontPage with Navigation Draw")
 ![Front Page](/frontPage.png?raw=true "Front Page")
 ![historyReport](/historyReport.png?raw=true "History Report Page")
